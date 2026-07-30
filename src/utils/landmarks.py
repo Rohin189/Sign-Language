@@ -75,3 +75,25 @@ class HandLandmarkExtractor:
 
     def close(self):
         self.hands.close()
+        
+if __name__ == "__main__":
+    import cv2
+
+    extractor = HandLandmarkExtractor()
+    cap = cv2.VideoCapture(config.CAMERA_INDEX)
+
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        feature_vector, results = extractor.process_frame(frame)
+        print(feature_vector.shape, "| nonzero:", np.count_nonzero(feature_vector))
+
+        cv2.imshow("Landmark Test", frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
+    extractor.close()
