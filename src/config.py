@@ -16,8 +16,8 @@ for d in [RAW_DATA_DIR, PROCESSED_DATA_DIR, MODELS_DIR]:
 # ── Sign vocabulary ─────────────────────────────────────────────
 # Replace with your own 10 signs if these don't match your plan
 SIGNS = [
-    "hello",
-    "thank_you",
+    #"hello",
+    #"thank_you",
     "yes",
     "no",
     "please",

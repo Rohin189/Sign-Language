@@ -5,4 +5,4 @@ data/raw/
 data/processed/
 models/*.h5
 models/*.pkl
-.env
+verify.py
