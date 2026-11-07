@@ -6,3 +6,4 @@ data/processed/
 models/*.h5
 models/*.pkl
 verify.py
+models/*.keras

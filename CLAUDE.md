@@ -83,7 +83,7 @@ Never run `python src/<file>.py` directly; it breaks `from src import config` im
 ## Phase roadmap
 
 1. **Data foundation** (complete): env, config, landmark extraction, collection script, dataset collected.
-2. Preprocessing and baseline model (`preprocess.py`, `train.py`). *(in progress: both written; baseline test accuracy 0.939, pending owner review)*
+2. **Preprocessing and baseline model** (complete): `preprocess.py`, `train.py`; baseline LSTM test accuracy 0.939 (weakest sign: `good`, confused with `help`/`sorry`).
 3. Model improvement and evaluation. *(upcoming)*
 4. Real-time inference. *(upcoming)*
 5. Multi-signer expansion and generalization testing. *(upcoming)*
