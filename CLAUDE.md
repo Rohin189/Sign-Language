@@ -20,8 +20,8 @@ models/                          # trained models (weights git-ignored)
 src/config.py                    # single source of truth for all settings
 src/utils/landmarks.py           # HandLandmarkExtractor: frame -> 128-dim vector
 src/collect_signs.py             # webcam data collection tool
-src/preprocess.py                # Phase 2 (currently empty)
-src/train.py                     # Phase 2 (currently empty)
+src/preprocess.py                # raw -> data/processed/dataset.npz (stratified split, quality report)
+src/train.py                     # baseline LSTM training -> models/baseline_lstm.keras
 verify.py                        # local sanity-check script (git-ignored)
 ```
 
@@ -48,12 +48,20 @@ Activate the environment, then always run scripts **as modules from the project 
 
 ```powershell
 conda activate sign_lang_env
-python -m src.collect_signs        # collect data
-python -m src.utils.landmarks      # live landmark extraction test (q to quit)
+python -m src.collect_signs        # collect data (webcam, owner runs)
+python -m src.utils.landmarks      # live landmark extraction test (webcam, owner runs; q to quit)
+python -m src.preprocess           # raw -> data/processed/dataset.npz
+python -m src.train                # train baseline model
 python verify.py                   # inspect a saved sample
 ```
 
 Never run `python src/<file>.py` directly; it breaks `from src import config` imports.
+
+## Terminal ownership
+
+- Claude runs all terminal work itself: installs, scripts (`preprocess`, `train`, `verify.py`), checks, and git. Do not hand commands to the owner to run.
+- Ask the owner to run a command only when it genuinely needs them: interactive webcam or GUI tools (`collect_signs`, `src.utils.landmarks`), or interactive logins. Give the exact command when asking.
+- `git commit` and `git push`: Claude runs them, but always asks for confirmation first.
 
 **collect_signs.py controls:** `SPACE` = record, `r` = redo (delete) last sample, `n` = next sign, `q` = quit.
 
@@ -75,7 +83,7 @@ Never run `python src/<file>.py` directly; it breaks `from src import config` im
 ## Phase roadmap
 
 1. **Data foundation** (complete): env, config, landmark extraction, collection script, dataset collected.
-2. Preprocessing and baseline model (`preprocess.py`, `train.py`). *(upcoming)*
+2. Preprocessing and baseline model (`preprocess.py`, `train.py`). *(in progress: both written; baseline test accuracy 0.939, pending owner review)*
 3. Model improvement and evaluation. *(upcoming)*
 4. Real-time inference. *(upcoming)*
 5. Multi-signer expansion and generalization testing. *(upcoming)*
@@ -88,4 +96,4 @@ Never run `python src/<file>.py` directly; it breaks `from src import config` im
 - Proceed topic by topic, in structured steps.
 - When debugging, improve the existing code iteratively rather than replacing it wholesale.
 - Where practical, let the owner attempt the implementation first, then review it.
-- Be specific: give exact commands, file paths, and expected output.
+- Be specific: give exact file paths and expected output; run commands rather than handing them over (see Terminal ownership).
